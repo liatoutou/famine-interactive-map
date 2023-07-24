@@ -8,6 +8,7 @@ type Props = {
   setSelectedRegion: (regionList: string[]) => void;
   minDate: Date | null;
   maxDate: Date | null;
+  countryselection: string
 };
 
 type meanIpcDataRow = {
@@ -19,7 +20,7 @@ type meanIpcData = meanIpcDataRow[];
 
 const dateTostring = (date: Date) => date.toISOString().split("T")[0];
 
-function DrawIPC({ setSelectedRegion, minDate, maxDate }: Props) {
+function DrawIPC({ setSelectedRegion, minDate, maxDate, countryselection}: Props) {
   const [ipcData, setIpcData] = React.useState<meanIpcData>([]);
 
   React.useEffect(() => {
@@ -32,6 +33,7 @@ function DrawIPC({ setSelectedRegion, minDate, maxDate }: Props) {
       params: {
         minDate: minDate.getTime() / 1000,
         maxDate: maxDate.getTime() / 1000,
+        country: countryselection
       },
     }).then((response) => {
       setIpcData(response.data);

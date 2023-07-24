@@ -6,6 +6,7 @@ type ControlProps2 = {
   setSelectedRegion: (regionList: string[]) => void;
   startDate: Date | null;
   endDate: Date | null;
+  countryselection: string;
 };
 
 type ControlProps = {

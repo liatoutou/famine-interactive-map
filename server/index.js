@@ -43,20 +43,22 @@ app.get("/api/get_mean_ipc_date_by_region_new", (req, res) => {
     .then(df => {
       let minDate = Number(req.query.minDate);
       let maxDate = Number(req.query.maxDate);
-      let region = req.query.region;
-
-      let region_mask = df['admin_name'].eq(region);
+      let regions = req.query.regions
+      console.log(regions)
+      let condition = df['admin_name'].eq(regions[0])
+      for (let i = 1; i < regions.length; i++) {
+        condition = condition.or(df['admin_name'].eq(regions[i]))
+      }
+      
       let date_mask = df['timestamp'].ge(minDate).and(df['timestamp'].le(maxDate));
-      let combined_mask = region_mask.and(date_mask);
+      let combined_mask = condition.and(date_mask);
+      df = df.loc({ rows: combined_mask }); 
+      df.print()
 
-      let query_df = df.loc({ rows: combined_mask });
-
-      console.log(query_df);
-
-      df = query_df.loc({ columns: ["admin_name", "fews_ipc"] });
+      df = df.loc({ columns: ["admin_name", "fews_ipc","date"] });
       df = df.dropNa({ axis: 1 });
-      let grp = df.groupby(['admin_name']);
-      let result = grp.col(["fews_ipc"]).mean().rename({fews_ipc: "ipc", admin_name: "region"});
+      let grp = df.groupby(['date']);
+      let result = grp.col(["fews_ipc"]).mean().rename({fews_ipc_mean: "y", admin_name: "region", date: "x"});
   
       if (result.shape[0] > 0) { // Check if the result has any rows
         res.send(dfd.toJSON(result));
@@ -71,20 +73,20 @@ app.get("/api/get_mean_ipc_date_by_region_new", (req, res) => {
 });
 
 
+
 app.get("/api/get_ipc_mean_new", (req, res) => {
   dfd.readCSV("./filtered_dataset.csv")
     .then(df => {
       let minDate = Number(req.query.minDate)
       let maxDate = Number(req.query.maxDate)
-      //let country = req.query.country
+      let country = req.query.country
       
-      //let country_mask = df['country'].eq(country);
+      let country_mask = df['country'].eq(country);
       let date_mask = df['timestamp'].ge(minDate).and(df['timestamp'].le(maxDate))
-      df = df.query(date_mask)
+      
+      let combined_mask = country_mask.and(date_mask);
 
-      //let combined_mask = country_mask.and(date_mask);
-
-      //df = df.loc({ rows: combined_mask }); 
+      df = df.loc({ rows: combined_mask }); 
       df = df.loc({ columns: ["admin_name", "fews_ipc"] });
 
       // drop rows with NaN values

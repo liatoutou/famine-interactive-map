@@ -10,6 +10,7 @@ import Line from "../charts/Line";
 import MyResponsiveLine from "../charts/MyResponsiveLine";
 import Axios from "axios";
 import dataSet from "../DataTypes";
+import ExampleComponent from "./ExampleComponent"
 
 const { Content } = Layout;
 
@@ -20,6 +21,8 @@ const DashBoard = () => {
   const [mapCenter, setMapCenter] = React.useState(startMapCenter);
   const [mapZoom, setMapZoom] = React.useState(startMapZoom);
   const [N, setN] = React.useState(1);
+  const [count, setCount] = React.useState(0);
+
 
   const [startDate, setStartDate] = React.useState<Date | null>(null);
   const [endDate, setEndDate] = React.useState<Date | null>(null);
@@ -28,6 +31,7 @@ const DashBoard = () => {
   const [drawMap, setDrawMap] = React.useState(true);
   const [selectedRegion, setSelectedRegion] = React.useState<string[]>([]);
   const [data, setData] = React.useState<dataSet[]>([]);
+  const [countryselection, setCountrySelection] = React.useState<string>('Somalia');
 
   const dateTostring = (date: Date) => date.toISOString().split("T")[0];
 
@@ -38,15 +42,15 @@ const DashBoard = () => {
     }
     console.log(startDate.toISOString());
     console.log(selectedRegion);
-    Axios.get("http://localhost:3001/api/get_mean_ipc_date_by_region", {
+    Axios.get("http://localhost:3001/api/get_mean_ipc_date_by_region_new", {
       params: {
-        minDate: dateTostring(startDate),
-        maxDate: dateTostring(endDate),
+        minDate: startDate.getTime() / 1000,
+        maxDate: endDate.getTime() / 1000,
         regions: selectedRegion,
       },
     }).then((response) => {
-      setData([{ id: "IPC", data: response.data }]);
-      // console.log(data);
+      // setData([{ id: "IPC", data: response.data }]);
+      setData(response.data);
       // console.log("hi1");
     });
   }, [startDate, endDate, selectedRegion]);
@@ -58,9 +62,12 @@ const DashBoard = () => {
           className="site-layout-background"
           style={{ padding: 24, height: "100%", width: "100%" }}
         >
+          {countryselection}
+                  {/* <ExampleComponent count={count} setCount={setCount}/> */}
+
           <Row style={{ height: "100%" }}>
             <Col span={12}>
-              <CountrySelection setMapCenter={setMapCenter} />
+              <CountrySelection setMapCenter={setMapCenter} setCountrySelection={setCountrySelection}/>
               <DateSelection
                 setStartDate={setStartDate}
                 setEndDate={setEndDate}
@@ -89,6 +96,7 @@ const DashBoard = () => {
                 setSelectedRegion={setSelectedRegion}
                 startDate={startDate}
                 endDate={endDate}
+                countryselection={countryselection}
               />
             </Col>
           </Row>

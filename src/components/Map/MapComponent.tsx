@@ -6,6 +6,13 @@ import ChangeView from "./ChangeView";
 import DrawIPC from "./DrawIPC";
 
 const somaliaPos: LatLngTuple = [5.152149, 46.199615];
+const kenyaPos: LatLngTuple = [0.1768696, 37.9083264];
+const ethiopiaPos: LatLngTuple = [9.149175, 40.498867];
+const southsudanPos: LatLngTuple = [7.8626845,29.6949232];
+const sudanPos: LatLngTuple = [15.7860696, 30.1995791];
+const ugandaPos: LatLngTuple = [1.3707295,32.3032414];
+
+//---check
 
 const MapComponent = ({
   center,
@@ -15,6 +22,7 @@ const MapComponent = ({
   setSelectedRegion,
   startDate,
   endDate,
+  countryselection,
 }: ControlProps2) => {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
 
@@ -79,6 +87,7 @@ const MapComponent = ({
           minDate={startDate}
           maxDate={endDate}
           setSelectedRegion={setSelectedRegion}
+          countryselection = {countryselection}
         />
       )}
       <ChangeView center={center} zoom={zoom} />

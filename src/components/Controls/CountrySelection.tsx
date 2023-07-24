@@ -6,7 +6,11 @@ const { Option } = Select;
 
 const locDict: { [key: string]: LatLngTuple } = {
   Somalia: [5.152149, 46.199615],
-  Kenya: [0, 0],
+  Kenya: [0.1768696, 37.9083264],
+  "South Sudan": [7.8626845, 29.6949232],
+  Sudan: [15.7860696,30.1995791],
+  Ethiopia:[9.149175, 40.498867],
+  Uganda:[1.3707295, 32.3032414]  
 };
 
 const onSearch = (value: string) => {
@@ -15,11 +19,14 @@ const onSearch = (value: string) => {
 
 type Props = {
   setMapCenter: React.Dispatch<React.SetStateAction<LatLngTuple>>;
+  setCountrySelection: (countrySelection: string) => void;
 };
 
-const CountrySelection = ({ setMapCenter }: Props) => {
+const CountrySelection = ({ setMapCenter, setCountrySelection }: Props) => {
   const onChange = (value: string) => {
-    console.log(`selected ${setMapCenter(locDict[value])}`);
+    console.log(locDict[value])
+    setMapCenter(locDict[value])
+    setCountrySelection(value);
   };
   return (
     <Select
@@ -36,6 +43,11 @@ const CountrySelection = ({ setMapCenter }: Props) => {
     >
       <Option value="Somalia">Somalia</Option>
       <Option value="Kenya">Kenya</Option>
+      <Option value="Somalia">Somalia</Option>
+      <Option value="South Sudan">South Sudan</Option>
+      <Option value="Sudan">Sudan</Option>
+      <Option value="Uganda">Uganda</Option>
+
     </Select>
   );
 };
