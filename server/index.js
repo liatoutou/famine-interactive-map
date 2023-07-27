@@ -81,6 +81,7 @@ app.get("/api/get_ipc_mean_new", (req, res) => {
       let maxDate = Number(req.query.maxDate)
       let country = req.query.country
       
+      
       let country_mask = df['country'].eq(country);
       let date_mask = df['timestamp'].ge(minDate).and(df['timestamp'].le(maxDate))
       
@@ -366,13 +367,14 @@ app.get("/api/get_et_mean", (req, res) => {
       res.status(500).send({ error: 'An error occurred' });
     });
 });
-
-
-
-
 //TODO:-------------population and pcts -----------
 
-
+app.get("/api/get_markers", (req,res)=>{
+  dfd.readCSV("./example.csv")
+  .then(df =>{
+    res.send(dfd.toJSON(df));
+ });
+});
 
 
 

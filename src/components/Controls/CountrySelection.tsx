@@ -41,7 +41,7 @@ const CountrySelection = ({ setMapCenter, setCountrySelection }: Props) => {
           .includes(input.toLowerCase())
       }
     >
-      <Option value="Somalia">Somalia</Option>
+      <Option value="Ethiopia">Ethiopia</Option>
       <Option value="Kenya">Kenya</Option>
       <Option value="Somalia">Somalia</Option>
       <Option value="South Sudan">South Sudan</Option>

@@ -8,7 +8,7 @@ type Props = {
   setSelectedRegion: (regionList: string[]) => void;
   minDate: Date | null;
   maxDate: Date | null;
-  countryselection: string
+  countryselection: string;
 };
 
 type meanIpcDataRow = {
@@ -39,11 +39,12 @@ function DrawIPC({ setSelectedRegion, minDate, maxDate, countryselection}: Props
       setIpcData(response.data);
       console.log(response.data);
     });
-  }, [minDate, maxDate]);
+  }, [minDate, maxDate,countryselection]);
 
   return (
     <>
       <DrawRegions
+        countryselection={countryselection}
         data={ipcData.map((row) => ({
           region: row.region,
           ipc: row.ipc,

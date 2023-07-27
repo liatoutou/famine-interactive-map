@@ -1,8 +1,10 @@
 import { GeoJSON } from "react-leaflet";
-import React from "react";
-import regionsJson from "./regions.json";
+import React from "react"
+import { useRef } from "react";
+import regions from "./regions.json";
 
-let regionDict: { [region: string]: any } = regionsJson;
+
+let regionDict: { [region: string]: any } = regions;
 
 type dataRow = {
   region: string;
@@ -12,6 +14,7 @@ type dataRow = {
 type Props = {
   data: dataRow[];
   setSelectedRegion: (regionList: string[]) => void;
+  countryselection:string;
 };
 
 const nRegions = 73;

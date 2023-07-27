@@ -4,6 +4,7 @@ import React from "react";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import ChangeView from "./ChangeView";
 import DrawIPC from "./DrawIPC";
+import DrawMarkers from './DrawMarkers'
 
 const somaliaPos: LatLngTuple = [5.152149, 46.199615];
 const kenyaPos: LatLngTuple = [0.1768696, 37.9083264];
@@ -97,18 +98,43 @@ const MapComponent = ({
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
       )}
+      <DrawMarkers/>
       <Marker
         position={somaliaPos}
         eventHandlers={{
           click: (i) => showDrawer(),
         }}
-      ></Marker>
-      {/* <Modal
-        title="Basic Modal"
-        open={isModalOpen}
-        onOk={handleOk}
-        onCancel={handleCancel}
-      > */}
+      >
+        <Popup> Somalia </Popup>
+      </Marker>
+      <Marker
+        position={ethiopiaPos}
+      >
+        <Popup> Ethiopia </Popup>
+      </Marker>
+      <Marker
+        position={kenyaPos}
+      >
+        <Popup> Kenya </Popup>
+      </Marker>
+      <Marker
+        position={southsudanPos}
+      >
+        <Popup> South Sudan </Popup>
+      </Marker>
+      <Marker
+        position={sudanPos}
+        eventHandlers={{
+          click: (i) => showDrawer(),
+        }}
+      >
+        <Popup> Sudan</Popup>
+      </Marker>
+      <Marker
+        position={ugandaPos}
+      >
+        <Popup> Uganda </Popup>
+      </Marker>
       <Drawer
         // afterChange={onChange}
         title="Relevant articles"

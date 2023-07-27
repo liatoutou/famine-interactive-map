@@ -17,12 +17,20 @@ const { Content } = Layout;
 const DashBoard = () => {
   const startMapCenter: LatLngTuple = [5.152149, 46.199615];
   const startMapZoom: number = 5.2;
-
+  interface CountryZoomMapping {
+    [key: string]: number;
+  }
+  const countryToZoom: CountryZoomMapping = {
+    'Somalia': 6,
+    'Uganda': 6.8,
+    'South Sudan':6,
+    'Sudan':5.2,
+    'Ethiopia':5.8,
+    'Kenya': 6.4
+  };
   const [mapCenter, setMapCenter] = React.useState(startMapCenter);
   const [mapZoom, setMapZoom] = React.useState(startMapZoom);
   const [N, setN] = React.useState(1);
-  const [count, setCount] = React.useState(0);
-
 
   const [startDate, setStartDate] = React.useState<Date | null>(null);
   const [endDate, setEndDate] = React.useState<Date | null>(null);
@@ -34,6 +42,14 @@ const DashBoard = () => {
   const [countryselection, setCountrySelection] = React.useState<string>('Somalia');
 
   const dateTostring = (date: Date) => date.toISOString().split("T")[0];
+  React.useEffect(() => {
+    if (countryToZoom.hasOwnProperty(countryselection)) {
+      setMapZoom(countryToZoom[countryselection]);
+    } else {
+      // Set to default zoom level if country is not in the mapping
+      setMapZoom(startMapZoom);
+    }
+  },[countryselection]);
 
   React.useEffect(() => {
     if (startDate === null || endDate === null) {
@@ -49,11 +65,9 @@ const DashBoard = () => {
         regions: selectedRegion,
       },
     }).then((response) => {
-      // setData([{ id: "IPC", data: response.data }]);
-      setData(response.data);
-      // console.log("hi1");
+      setData([{ id: "IPC", data: response.data }])
     });
-  }, [startDate, endDate, selectedRegion]);
+  }, [startDate, endDate, selectedRegion, countryselection]);
 
   return (
     <>
@@ -63,8 +77,6 @@ const DashBoard = () => {
           style={{ padding: 24, height: "100%", width: "100%" }}
         >
           {countryselection}
-                  {/* <ExampleComponent count={count} setCount={setCount}/> */}
-
           <Row style={{ height: "100%" }}>
             <Col span={12}>
               <CountrySelection setMapCenter={setMapCenter} setCountrySelection={setCountrySelection}/>

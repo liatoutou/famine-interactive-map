@@ -13,3 +13,7 @@ type ControlProps = {
   center: LatLngTuple;
   zoom: number;
 };
+declare module "*.geojson" {
+  const value: any;
+  export default value;
+}
