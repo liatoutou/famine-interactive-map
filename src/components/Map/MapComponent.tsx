@@ -98,7 +98,6 @@ const MapComponent = ({
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
       )}
-      <DrawMarkers/>
       <Marker
         position={somaliaPos}
         eventHandlers={{
@@ -124,9 +123,7 @@ const MapComponent = ({
       </Marker>
       <Marker
         position={sudanPos}
-        eventHandlers={{
-          click: (i) => showDrawer(),
-        }}
+        
       >
         <Popup> Sudan</Popup>
       </Marker>

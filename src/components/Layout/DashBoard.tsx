@@ -10,7 +10,6 @@ import Line from "../charts/Line";
 import MyResponsiveLine from "../charts/MyResponsiveLine";
 import Axios from "axios";
 import dataSet from "../DataTypes";
-import ExampleComponent from "./ExampleComponent"
 
 const { Content } = Layout;
 
@@ -39,7 +38,7 @@ const DashBoard = () => {
   const [drawMap, setDrawMap] = React.useState(true);
   const [selectedRegion, setSelectedRegion] = React.useState<string[]>([]);
   const [data, setData] = React.useState<dataSet[]>([]);
-  const [countryselection, setCountrySelection] = React.useState<string>('Somalia');
+  const [countryselection, setCountrySelection] = React.useState<string>("");
 
   const dateTostring = (date: Date) => date.toISOString().split("T")[0];
   React.useEffect(() => {
@@ -71,35 +70,24 @@ const DashBoard = () => {
 
   return (
     <>
-      <Content style={{ margin: "16px", height: "100%" }}>
+      <Content style={{ margin: "0px", height: "100%" }}>
         <div
           className="site-layout-background"
-          style={{ padding: 24, height: "100%", width: "100%" }}
+          style={{ padding: 0, height: "100%", width: "100%" }}
         >
           {countryselection}
-          <Row style={{ height: "100%" }}>
-            <Col span={12}>
-              <CountrySelection setMapCenter={setMapCenter} setCountrySelection={setCountrySelection}/>
+          <Row style={{ height: "100%", position: "relative" }}>
+            <div className="overlay-controls">
+              <CountrySelection setMapCenter={setMapCenter} setCountrySelection={setCountrySelection} />
               <DateSelection
                 setStartDate={setStartDate}
                 setEndDate={setEndDate}
               />
-              <GranularitySlider setN={setN} />
-              <div style={{ height: "70%" }}>
-                {data.length > 0 && <MyResponsiveLine N={N} data={data} />}
-                <Checkbox
-                  onChange={(e) => setDrawMap(e.target.checked)}
-                  defaultChecked={true}
-                >
-                  show Map
-                </Checkbox>
-                <Checkbox onChange={(e) => setDrawIPC(e.target.checked)}>
-                  show IPC
-                </Checkbox>
-                <h1>{selectedRegion}</h1>
-              </div>
-            </Col>
-            <Col span={12}>
+              <Checkbox onChange={(e) => setDrawIPC(e.target.checked)}>
+                Show IPC
+              </Checkbox>
+            </div>
+            <Col span={24}>
               <MapComponent
                 center={mapCenter}
                 zoom={mapZoom}
