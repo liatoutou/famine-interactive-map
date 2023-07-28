@@ -24,7 +24,7 @@ type Props = {
 
 const CountrySelection = ({ setMapCenter, setCountrySelection }: Props) => {
   const onChange = (value: string) => {
-    console.log(locDict[value])
+    // console.log(locDict[value])
     setMapCenter(locDict[value])
     setCountrySelection(value);
   };
@@ -47,7 +47,6 @@ const CountrySelection = ({ setMapCenter, setCountrySelection }: Props) => {
       <Option value="South Sudan">South Sudan</Option>
       <Option value="Sudan">Sudan</Option>
       <Option value="Uganda">Uganda</Option>
-
     </Select>
   );
 };
