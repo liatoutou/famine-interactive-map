@@ -7,6 +7,7 @@ type ControlProps2 = {
   startDate: Date | null;
   endDate: Date | null;
   countryselection: string;
+  drawFeatures?: boolean;
 };
 
 type ControlProps = {

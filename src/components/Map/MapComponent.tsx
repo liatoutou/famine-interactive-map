@@ -4,7 +4,7 @@ import React from "react";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import ChangeView from "./ChangeView";
 import DrawIPC from "./DrawIPC";
-import DrawMarkers from './DrawMarkers'
+import DrawFeatures from "./DrawFeatures";
 
 const somaliaPos: LatLngTuple = [5.152149, 46.199615];
 const kenyaPos: LatLngTuple = [0.1768696, 37.9083264];
@@ -24,6 +24,8 @@ const MapComponent = ({
   startDate,
   endDate,
   countryselection,
+  drawFeatures,
+
 }: ControlProps2) => {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
 
@@ -85,6 +87,14 @@ const MapComponent = ({
     >
       {drawIPC && (
         <DrawIPC
+          minDate={startDate}
+          maxDate={endDate}
+          setSelectedRegion={setSelectedRegion}
+          countryselection = {countryselection}
+        />
+      )}
+      {drawFeatures && (
+        <DrawFeatures
           minDate={startDate}
           maxDate={endDate}
           setSelectedRegion={setSelectedRegion}

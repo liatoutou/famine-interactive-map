@@ -2,7 +2,7 @@ import { Button } from "antd";
 import {
   QuestionCircleOutlined,
   BarChartOutlined,
-  ExclamationCircleOutlined,
+  FilterOutlined,
   MenuUnfoldOutlined,
   MenuFoldOutlined,
 } from "@ant-design/icons";
@@ -52,9 +52,9 @@ const Main = (props: Props) => {
             },
             {
               key: "2",
-              label: "Anomalies",
-              icon: React.createElement(ExclamationCircleOutlined),
-              onClick: () => nav("anomalies"),
+              label: "Features",
+              icon: React.createElement(FilterOutlined),
+              onClick: () => nav("features"),
             },
             {
               key: "3",

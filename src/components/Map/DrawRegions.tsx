@@ -1,6 +1,5 @@
 import { GeoJSON } from "react-leaflet";
 import React from "react"
-import { useRef } from "react";
 import regions from "./regions.json";
 
 
@@ -17,7 +16,7 @@ type Props = {
   countryselection:string;
 };
 
-const nRegions = 73;
+const nRegions = 290;
 const selectedRegions: boolean[] = new Array(nRegions).fill(false);
 
 function setElement(arr: boolean[], index: number, value: boolean) {
