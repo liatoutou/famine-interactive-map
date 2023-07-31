@@ -41,6 +41,7 @@ const DashBoard = () => {
   const [data, setData] = React.useState<dataSet[]>([]);
   const [countryselection, setCountrySelection] = React.useState<string>("");
   const [drawFeatures, setDrawFeatures] = React.useState(false);
+  const [featureselection, setSelectedFeature] = React.useState<string>("");
 
   const dateTostring = (date: Date) => date.toISOString().split("T")[0];
   React.useEffect(() => {
@@ -99,6 +100,7 @@ const DashBoard = () => {
                 endDate={endDate}
                 countryselection={countryselection}
                 drawFeatures={drawFeatures}
+                featureselection={featureselection}
               />
             </Col>
           </Row>

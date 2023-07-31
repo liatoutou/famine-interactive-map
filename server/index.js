@@ -253,7 +253,7 @@ app.get("/api/get_acled_count_sum", (req, res) => {
       df = df.dropNa({ axis: 1 });
 
       let grp = df.groupby(['admin_name'])
-      let result = grp.col(["acled_count"]).sum().rename({acled_count_sum: "Number of violent events", admin_name: "Region"})
+      let result = grp.col(["acled_count"]).sum().rename({acled_count_sum: "feature", admin_name: "region"})
 
       if (result.shape[0] > 0) { // Check if the result has any rows
         res.send(dfd.toJSON(result))
@@ -287,7 +287,7 @@ app.get("/api/get_acled_fatalities_sum", (req, res) => {
       df = df.dropNa({ axis: 1 });
 
       let grp = df.groupby(['admin_name'])
-      let result = grp.col(["acled_fatalities"]).sum().rename({acled_fatalities_sum: "Number of fatalities", admin_name: "Region"})
+      let result = grp.col(["acled_fatalities"]).sum().rename({acled_fatalities_sum: "feature", admin_name: "region"})
 
       if (result.shape[0] > 0) { // Check if the result has any rows
         res.send(dfd.toJSON(result))

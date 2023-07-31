@@ -8,6 +8,7 @@ type ControlProps2 = {
   endDate: Date | null;
   countryselection: string;
   drawFeatures?: boolean;
+  featureselection: string;
 };
 
 type ControlProps = {

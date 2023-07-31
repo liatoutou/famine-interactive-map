@@ -1,17 +1,30 @@
 import React from "react";
 import Axios from "axios";
 import DrawRegions from "./DrawRegions";
+import FeaturesLegend from "./FeaturesLegend";
 
 // const colors = ["#CDFACD", "#FAE61E", "#E67800", "#C80000", "#640000"];
 
 function getColor(value:number) {
-    if (value < 20) {
-      return '#CDFACD';
-    } else if (value < 50) {
-      return '#E67800';
-    } else {
-      return '#640000';
-    }
+    if (value < 10) {
+      return '#CBB5B8';
+    } else if (value < 20) {
+      return '#B29DA0';
+    } else if (value < 40) {
+        return '#A86068';
+    } else if (value < 80) {
+        return '#A6545D';
+    } else if (value < 100) {
+        return '#95414A';
+    } else if (value < 150) {
+        return '#912E39';
+    } else if (value < 200) {
+        return '#91202C';
+    } else if (value < 250) {
+        return '#8E0312';
+    }  else  {
+        return '#3A0007';
+}
 }
 
 type Props = {
@@ -19,6 +32,7 @@ type Props = {
     minDate: Date | null;
     maxDate: Date | null;
     countryselection: string;
+    featureselection: string;
     
   };
 type sumFeatureDataRow = {
@@ -28,18 +42,17 @@ type sumFeatureDataRow = {
   
 type sumFeature= sumFeatureDataRow[];
 
-function DrawFeatures({ setSelectedRegion, minDate, maxDate, countryselection}: Props){
+function DrawFeatures({ setSelectedRegion, minDate, maxDate, countryselection,featureselection}: Props){
     const [sumData, setSumData] = React.useState<sumFeature>([]);
-    const [selectedFeature, setSelectedFeature] = React.useState<string | null>(null);
     React.useEffect(() => {
         if (minDate === null || maxDate === null) {
             setSumData([]);
             return;
         }
         let endpoint;
-        if (selectedFeature === 'violent_events') {
+        if (featureselection === 'violent_events') {
             endpoint = "http://localhost:3001/api/get_acled_count_sum";
-        } else if (selectedFeature === 'fatalities') {
+        } else if (featureselection === 'fatalities') {
             endpoint = "http://localhost:3001/api/get_acled_fatalities_sum";
         } else {
             return;
@@ -57,18 +70,19 @@ function DrawFeatures({ setSelectedRegion, minDate, maxDate, countryselection}: 
             console.log("An error occurred: ", error);
         });
         
-    }, [selectedFeature, minDate, maxDate, countryselection]);
+    }, [featureselection, minDate, maxDate, countryselection]);
     return (
         <>
         <DrawRegions
             countryselection={countryselection}
             data={sumData.map((row) => ({
-            region: row.region,
-            feature: row.feature,
-            color: getColor(row.feature),
+                region: row.region,
+                feature: row.feature,
+                color: getColor(row.feature),
             }))}
             setSelectedRegion={setSelectedRegion}
         />
+        <FeaturesLegend />
     </>
   );
 }

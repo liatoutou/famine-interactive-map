@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { Select, Checkbox, Button } from "antd";
+import { Select, Checkbox} from "antd";
 import { Layout, Row, Col } from "antd";
 import { LatLngTuple } from "leaflet";
 import MapComponent from "../Map/MapComponent";
 import CountrySelection from "../Controls/CountrySelection";
 import DateSelection from "./DateSelection";
+import FeatureSelection from "../Controls/FeatureSelection";
 
 const { Option } = Select;
 const { Content } = Layout;
@@ -32,7 +33,7 @@ const Anomalies = () => {
   const [drawMap, setDrawMap] = React.useState(true);
   const [selectedRegion, setSelectedRegion] = React.useState<string[]>([]);
   const [countryselection, setCountrySelection] = React.useState<string>("");
-  const [selectedFeature, setSelectedFeature] = useState<string | null>(null);
+  const [featureselection, setSelectedFeature] = useState<string>("");
   const [drawFeatures, setDrawFeatures] = React.useState(false);
 
 
@@ -54,10 +55,7 @@ const Anomalies = () => {
           <Row style={{ height: "100%", position: "relative" }}>
             <div className="overlay-controls">
               <CountrySelection setMapCenter={setMapCenter} setCountrySelection={setCountrySelection} />
-              <Select defaultValue="Select a feature" style={{ width: 120 }} onChange={setSelectedFeature}>
-                <Option value="violent_events">Violent events</Option>
-                <Option value="fatalities">Fatalities</Option>
-              </Select>
+              <FeatureSelection setSelectedFeature={setSelectedFeature}/>
               <DateSelection setStartDate={setStartDate} setEndDate={setEndDate} />
               <Checkbox onChange={(e) => setDrawFeatures(e.target.checked)}>
                 Show Numbers
@@ -74,6 +72,7 @@ const Anomalies = () => {
                 endDate={endDate}
                 countryselection={countryselection}
                 drawFeatures={drawFeatures}
+                featureselection={featureselection}
               />
             </Col>
           </Row>

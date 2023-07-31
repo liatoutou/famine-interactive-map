@@ -1,4 +1,4 @@
-import { Avatar, Carousel, Divider, Drawer, List, Modal } from "antd";
+import { Avatar, Divider, Drawer, List} from "antd";
 import { LatLngTuple } from "leaflet";
 import React from "react";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
@@ -25,6 +25,7 @@ const MapComponent = ({
   endDate,
   countryselection,
   drawFeatures,
+  featureselection,
 
 }: ControlProps2) => {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
@@ -99,6 +100,7 @@ const MapComponent = ({
           maxDate={endDate}
           setSelectedRegion={setSelectedRegion}
           countryselection = {countryselection}
+          featureselection = {featureselection}
         />
       )}
       <ChangeView center={center} zoom={zoom} />

@@ -24,6 +24,12 @@ type meanDateIpcDataRow = {
   region: string;
   ipc: number;
 };
+type sumFeatureDataRow = {
+  region: string;
+  feature: number;
+};
+
+type sumFeature= sumFeatureDataRow[];
 
 type dataSet = {
   id: string;
