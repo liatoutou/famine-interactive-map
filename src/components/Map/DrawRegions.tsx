@@ -1,5 +1,6 @@
 import { GeoJSON } from "react-leaflet";
 import React from "react"
+
 import regions from "./regions.json";
 
 

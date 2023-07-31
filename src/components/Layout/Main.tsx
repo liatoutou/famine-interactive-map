@@ -37,10 +37,11 @@ const Main = (props: Props) => {
         collapsed={collapsed}
         breakpoint="lg"
         collapsedWidth="0"
+        theme="light"
       >
         <div className="logo" />
         <Menu
-          theme="dark"
+          theme="light"
           mode="inline"
           defaultSelectedKeys={["1"]}
           items={[

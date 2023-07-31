@@ -35,7 +35,7 @@ const DashBoard = () => {
   const [startDate, setStartDate] = React.useState<Date | null>(null);
   const [endDate, setEndDate] = React.useState<Date | null>(null);
 
-  const [drawIPC, setDrawIPC] = React.useState(false);
+  const [drawIPC, setDrawIPC] = React.useState(true);
   const [drawMap, setDrawMap] = React.useState(true);
   const [selectedRegion, setSelectedRegion] = React.useState<string[]>([]);
   const [data, setData] = React.useState<dataSet[]>([]);
@@ -54,22 +54,8 @@ const DashBoard = () => {
   },[countryselection]);
 
   React.useEffect(() => {
-    if (startDate === null || endDate === null) {
-      setData([]);
-      return;
-    }
-    console.log(startDate.toISOString());
-    console.log(selectedRegion);
-    Axios.get("http://localhost:3001/api/get_mean_ipc_date_by_region_new", {
-      params: {
-        minDate: startDate.getTime() / 1000,
-        maxDate: endDate.getTime() / 1000,
-        regions: selectedRegion,
-      },
-    }).then((response) => {
-      setData([{ id: "IPC", data: response.data }])
-    });
-  }, [startDate, endDate, selectedRegion, countryselection]);
+    setDrawIPC(prevState => !prevState);
+  }, [startDate, endDate, countryselection]);
 
   return (
     <>
@@ -85,9 +71,9 @@ const DashBoard = () => {
                 setStartDate={setStartDate}
                 setEndDate={setEndDate}
               />
-              <Checkbox onChange={(e) => setDrawIPC(e.target.checked)}>
+              {/* <Checkbox onChange={(e) => setDrawIPC(e.target.checked)}>
                 Show IPC
-              </Checkbox>
+              </Checkbox> */}
             </div>
             <Col span={24}>
               <MapComponent

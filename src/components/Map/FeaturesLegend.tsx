@@ -62,7 +62,7 @@ const FeaturesLegend = () => (
         width: "100%",
         textAlign: "center",
         color: "black",
-        backgroundColor: "#95414A",
+        backgroundColor: "#8F4850",
         margin: 0,
       }}
     >

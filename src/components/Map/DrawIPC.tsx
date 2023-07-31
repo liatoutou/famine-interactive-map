@@ -24,6 +24,7 @@ function DrawIPC({ setSelectedRegion, minDate, maxDate, countryselection}: Props
   const [ipcData, setIpcData] = React.useState<meanIpcData>([]);
 
   React.useEffect(() => {
+    console.log('use effect called')
     if (minDate === null || maxDate === null) {
       setIpcData([]);
       return;
