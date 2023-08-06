@@ -126,111 +126,6 @@ app.get("/api/example", (req, res) => {
   })
 });
 
-// ------------ Anomalies functions --------
-
-app.get("/api/get_rain_anom_sum", (req, res) => {
-  dfd.readCSV("./filtered_dataset.csv")
-    .then(df => {
-      let minDate = Number(req.query.minDate)
-      let maxDate = Number(req.query.maxDate)
-      let country = req.query.country
-
-      let country_mask = df['country'].eq(country);
-      let date_mask = df['timestamp'].ge(minDate).and(df['timestamp'].le(maxDate))
-
-      let combined_mask = country_mask.and(date_mask);
-
-      df = df.loc({ rows: combined_mask });   
-      
-
-      df = df.loc({ columns: ["admin_name", "rain_anom"] });
-
-      // drop rows with NaN values
-      df = df.dropNa({ axis: 1 });
-
-      let grp = df.groupby(['admin_name'])
-      let result = grp.col(["rain_anom"]).sum().rename({rain_anom: "rain anomalies", admin_name: "region"})
-
-      if (result.shape[0] > 0) { // Check if the result has any rows
-        res.send(dfd.toJSON(result))
-      } else {
-        res.status(500).send({ error: 'No data available for given query' });
-      }
-    })
-    .catch(err => {
-      console.error(err);
-      res.status(500).send({ error: 'An error occurred' });
-    });
-});
-
-app.get("/api/get_et_anom_sum", (req, res) => {
-  dfd.readCSV("./filtered_dataset.csv")
-    .then(df => {
-      let minDate = Number(req.query.minDate)
-      let maxDate = Number(req.query.maxDate)
-      let country = req.query.country
-
-      let country_mask = df['country'].eq(country);
-      let date_mask = df['timestamp'].ge(minDate).and(df['timestamp'].le(maxDate))
-
-      let combined_mask = country_mask.and(date_mask);
-
-      df = df.loc({ rows: combined_mask });    
-
-      df = df.loc({ columns: ["admin_name", "et_anom"] });
-
-      // drop rows with NaN values
-      df = df.dropNa({ axis: 1 });
-
-      let grp = df.groupby(['admin_name'])
-      let result = grp.col(["et_anom"]).sum().rename({et_anom: "et anomalies", admin_name: "region"})
-
-      if (result.shape[0] > 0) { // Check if the result has any rows
-        res.send(dfd.toJSON(result))
-      } else {
-        res.status(500).send({ error: 'No data available for given query' });
-      }
-    })
-    .catch(err => {
-      console.error(err);
-      res.status(500).send({ error: 'An error occurred' });
-    });
-});
-
-app.get("/api/get_ndvi_anom_sum", (req, res) => {
-  dfd.readCSV("./filtered_dataset.csv")
-    .then(df => {
-      let minDate = Number(req.query.minDate)
-      let maxDate = Number(req.query.maxDate)
-      let country = req.query.country
-
-      let country_mask = df['country'].eq(country);
-      let date_mask = df['timestamp'].ge(minDate).and(df['timestamp'].le(maxDate))
-
-      let combined_mask = country_mask.and(date_mask);
-
-      df = df.loc({ rows: combined_mask });    
-
-      df = df.loc({ columns: ["admin_name", "ndvi_anom"] });
-
-      // drop rows with NaN values
-      df = df.dropNa({ axis: 1 });
-
-      let grp = df.groupby(['admin_name'])
-      let result = grp.col(["ndvi_anom"]).sum().rename({ndvi_anom: "ndvi anomalies", admin_name: "region"})
-
-      if (result.shape[0] > 0) { // Check if the result has any rows
-        res.send(dfd.toJSON(result))
-      } else {
-        res.status(500).send({ error: 'No data available for given query' });
-      }
-    })
-    .catch(err => {
-      console.error(err);
-      res.status(500).send({ error: 'An error occurred' });
-    });
-});
-
 //-------------Violent Events functions ----------------
 
 app.get("/api/get_acled_count_sum", (req, res) => {
@@ -300,28 +195,25 @@ app.get("/api/get_acled_fatalities_sum", (req, res) => {
       res.status(500).send({ error: 'An error occurred' });
     });
 });
-//TODO:------------- functions for ndvi/et/rain_mean ----------
-app.get("/api/get_rain_mean", (req, res) => {
+
+//-------------Models-----------
+app.get("/api/get_predictions_bert", (req, res) => {
   dfd.readCSV("./filtered_dataset.csv")
     .then(df => {
-      let minDate = Number(req.query.minDate)
-      let maxDate = Number(req.query.maxDate)
+      let month = Number(req.query.month)
       let country = req.query.country
 
       let country_mask = df['country'].eq(country);
-      let date_mask = df['timestamp'].ge(minDate).and(df['timestamp'].le(maxDate))
+      let date_mask = df['timestamp'].eq(month)
 
       let combined_mask = country_mask.and(date_mask);
+      
+      df = df.loc({ rows: combined_mask }); 
 
-      df = df.loc({ rows: combined_mask });    
 
-      df = df.loc({ columns: ["admin_name", "rain_mean"] });
-
-      // drop rows with NaN values
-      df = df.dropNa({ axis: 1 });
-
-      let grp = df.groupby(['admin_name'])
-      let result = grp.col(["rain_mean"]).mean().rename({rain_mean: "rain_mean", admin_name: "Region"})
+      let result = df.loc({ columns: ["admin_name", "fews_ipc"] })
+      result = result.rename({ "fews_ipc": "ipc", "admin_name": "region" })
+      console.log(result)
 
       if (result.shape[0] > 0) { // Check if the result has any rows
         res.send(dfd.toJSON(result))
@@ -334,27 +226,28 @@ app.get("/api/get_rain_mean", (req, res) => {
       res.status(500).send({ error: 'An error occurred' });
     });
 });
-app.get("/api/get_et_mean", (req, res) => {
+app.get("/api/get_markers", (req,res)=>{
+  dfd.readCSV("./example.csv")
+  .then(df =>{
+    res.send(dfd.toJSON(df));
+ });
+});
+app.get("/api/get_predictions_bert", (req, res) => {
   dfd.readCSV("./filtered_dataset.csv")
     .then(df => {
-      let minDate = Number(req.query.minDate)
-      let maxDate = Number(req.query.maxDate)
+      let month = Number(req.query.month)
       let country = req.query.country
 
       let country_mask = df['country'].eq(country);
-      let date_mask = df['timestamp'].ge(minDate).and(df['timestamp'].le(maxDate))
+      let date_mask = df['timestamp'].eq(month)
 
       let combined_mask = country_mask.and(date_mask);
+      
+      df = df.loc({ rows: combined_mask }); 
 
-      df = df.loc({ rows: combined_mask });    
-
-      df = df.loc({ columns: ["admin_name", "et_mean"] });
-
-      // drop rows with NaN values
-      df = df.dropNa({ axis: 1 });
-
-      let grp = df.groupby(['admin_name'])
-      let result = grp.col(["et_mean"]).mean().rename({rain_mean: "rain_mean", admin_name: "Region"})
+      let result = df.loc({ columns: ["admin_name", "fews_ipc"] })
+      result = result.rename({ "fews_ipc": "ipc", "admin_name": "region" })
+      console.log(result)
 
       if (result.shape[0] > 0) { // Check if the result has any rows
         res.send(dfd.toJSON(result))
@@ -367,7 +260,8 @@ app.get("/api/get_et_mean", (req, res) => {
       res.status(500).send({ error: 'An error occurred' });
     });
 });
-//TODO:-------------population and pcts -----------
+
+
 
 app.get("/api/get_markers", (req,res)=>{
   dfd.readCSV("./example.csv")

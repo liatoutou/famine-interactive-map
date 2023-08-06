@@ -18,11 +18,12 @@ export const DateSelection = ({ setStartDate, setEndDate }: Props) => {
     }
     setStartDate(startDate);
     setEndDate(endDate);
+    console.log(setEndDate)
   };
 
   return (
     <RangePicker
-      picker="quarter"
+      picker="month"
       onChange={(values, _) =>
         values
           ? onChangeDate(values[0]?.toDate(), values[1]?.toDate())

@@ -47,9 +47,9 @@ const Main = (props: Props) => {
           items={[
             {
               key: "1",
-              label: "Dashboard",
+              label: "Past IPC scores",
               icon: React.createElement(BarChartOutlined),
-              onClick: () => nav("dashboard"),
+              onClick: () => nav("past_ipc"),
             },
             {
               key: "2",
@@ -59,9 +59,9 @@ const Main = (props: Props) => {
             },
             {
               key: "3",
-              label: "About",
+              label: "Predictions",
               icon: React.createElement(QuestionCircleOutlined),
-              onClick: () => nav("about"),
+              onClick: () => nav("predictions"),
             },
           ]}
         />

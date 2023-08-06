@@ -1,15 +1,12 @@
 import { Col, Layout, Row, Checkbox } from "antd";
 import MapComponent from "../Map/MapComponent";
 import CountrySelection from "../Controls/CountrySelection";
-import GranularitySlider from "../Controls/GranularitySlider";
-import TestBar from "../charts/TestBar";
 import React from "react";
 import { LatLngTuple } from "leaflet";
 import DateSelection from "./DateSelection";
-import Line from "../charts/Line";
-import MyResponsiveLine from "../charts/MyResponsiveLine";
 import Axios from "axios";
 import dataSet from "../DataTypes";
+import DrawPredictions from "../Map/DrawPredictions";
 
 
 const { Content } = Layout;
@@ -42,9 +39,13 @@ const DashBoard = () => {
   const [countryselection, setCountrySelection] = React.useState<string>("");
   const [drawFeatures, setDrawFeatures] = React.useState(false);
   const [featureselection, setSelectedFeature] = React.useState<string>("");
+  const [modelselection, setSelectedModel] = React.useState<string>("");
+  const [month, setMonth] = React.useState<Date | null>(null);
+  const [drawPredictions, setDrawPredictions] = React.useState(false);
+  // const dateTostring = (date: Date) => date.toISOString().split("T")[0];
 
-  const dateTostring = (date: Date) => date.toISOString().split("T")[0];
   React.useEffect(() => {
+    console.log("effect called")
     if (countryToZoom.hasOwnProperty(countryselection)) {
       setMapZoom(countryToZoom[countryselection]);
     } else {
@@ -52,10 +53,6 @@ const DashBoard = () => {
       setMapZoom(startMapZoom);
     }
   },[countryselection]);
-
-  React.useEffect(() => {
-    setDrawIPC(prevState => !prevState);
-  }, [startDate, endDate, countryselection]);
 
   return (
     <>
@@ -71,9 +68,9 @@ const DashBoard = () => {
                 setStartDate={setStartDate}
                 setEndDate={setEndDate}
               />
-              {/* <Checkbox onChange={(e) => setDrawIPC(e.target.checked)}>
+              <Checkbox onChange={(e) => setDrawIPC(e.target.checked)}>
                 Show IPC
-              </Checkbox> */}
+              </Checkbox>
             </div>
             <Col span={24}>
               <MapComponent
@@ -87,6 +84,9 @@ const DashBoard = () => {
                 countryselection={countryselection}
                 drawFeatures={drawFeatures}
                 featureselection={featureselection}
+                modelselection={modelselection}
+                month={month}
+                drawPredictions={drawPredictions}
               />
             </Col>
           </Row>

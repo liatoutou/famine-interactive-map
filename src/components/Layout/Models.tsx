@@ -2,16 +2,16 @@ import React, { useState } from "react";
 import { Select, Checkbox} from "antd";
 import { Layout, Row, Col } from "antd";
 import { LatLngTuple } from "leaflet";
-import MapComponentFeatures from "../Map/MapComponentFeatures";
+import MapComponentPreds from "../Map/MapComponentPreds";
 import CountrySelection from "../Controls/CountrySelection";
 import DateSelection from "./DateSelection";
-import FeatureSelection from "../Controls/FeatureSelection";
-import DrawPredictions from "../Map/DrawPredictions";
+import ModelSelection from "../Controls/ModelSelection";
+import MonthSelection from "./MonthSelection";
 
 const { Option } = Select;
 const { Content } = Layout;
 
-const Anomalies = () => {
+const Models = () => {
   const startMapCenter: LatLngTuple = [5.152149, 46.199615];
   const startMapZoom: number = 5.2;
   interface CountryZoomMapping {
@@ -40,10 +40,10 @@ const Anomalies = () => {
   const [month, setMonth] = React.useState<Date | null>(null);
   const [drawPredictions, setDrawPredictions] = React.useState(false);
 
+
   React.useEffect(() => {
     if (countryToZoom.hasOwnProperty(countryselection)) {
       setMapZoom(countryToZoom[countryselection]);
-      console.log("yes")
     } else {
       // Set to default zoom level if country is not in the mapping
       setMapZoom(startMapZoom);
@@ -58,15 +58,15 @@ const Anomalies = () => {
         >
           <Row style={{ height: "100%", position: "relative" }}>
             <div className="overlay-controls">
-              <CountrySelection setMapCenter={setMapCenter} setCountrySelection={setCountrySelection} />
-              <FeatureSelection setSelectedFeature={setSelectedFeature}/>
-              <DateSelection setStartDate={setStartDate} setEndDate={setEndDate} />
-              <Checkbox onChange={(e) => setDrawFeatures(e.target.checked)}>
-                Show Numbers
+              <CountrySelection setMapCenter={setMapCenter} setCountrySelection={setCountrySelection}/>
+              <ModelSelection setSelectedModel={setSelectedModel}/>
+              <MonthSelection setMonth={setMonth}/>
+              <Checkbox onChange={(e) => setDrawPredictions(e.target.checked)}>
+                Show IPC
               </Checkbox>
             </div>
             <Col span={24}>
-              <MapComponentFeatures
+              <MapComponentPreds
                 center={mapCenter}
                 zoom={mapZoom}
                 drawIPC={drawIPC}
@@ -89,4 +89,4 @@ const Anomalies = () => {
   );
 };
 
-export default Anomalies;
+export default Models;

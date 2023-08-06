@@ -9,6 +9,9 @@ type ControlProps2 = {
   countryselection: string;
   drawFeatures?: boolean;
   featureselection: string;
+  modelselection: string;
+  month: Date | null;
+  drawPredictions?: boolean;
 };
 
 type ControlProps = {
