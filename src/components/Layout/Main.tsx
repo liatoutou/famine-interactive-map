@@ -1,8 +1,8 @@
 import { Button } from "antd";
 import {
-  QuestionCircleOutlined,
+  LineChartOutlined,
   BarChartOutlined,
-  FilterOutlined,
+  EnvironmentOutlined,
   MenuUnfoldOutlined,
   MenuFoldOutlined,
 } from "@ant-design/icons";
@@ -53,14 +53,14 @@ const Main = (props: Props) => {
             },
             {
               key: "2",
-              label: "Features",
-              icon: React.createElement(FilterOutlined),
+              label: "Events",
+              icon: React.createElement(EnvironmentOutlined),
               onClick: () => nav("features"),
             },
             {
               key: "3",
               label: "Predictions",
-              icon: React.createElement(QuestionCircleOutlined),
+              icon: React.createElement(LineChartOutlined),
               onClick: () => nav("predictions"),
             },
           ]}

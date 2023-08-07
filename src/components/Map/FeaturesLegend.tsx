@@ -10,23 +10,23 @@ const FeaturesLegend = () => (
   >
     <div
       style={{
-        display: "inline-block",
+        display: "block",
         width: "100%",
         textAlign: "center",
         color: "black",
-        backgroundColor: "#CBB5B8",
+        backgroundColor: "#FFE0B2",
         margin: 0,
       }}
     >
-      "Less than 10"
+      0-10
     </div>
     <div
       style={{
-        display: "inline-block",
+        display: "block",
         width: "100%",
         textAlign: "center",
         color: "black",
-        backgroundColor: "#B29DA0",
+        backgroundColor: "#FFB74D",
         margin: 0,
       }}
     >
@@ -34,11 +34,11 @@ const FeaturesLegend = () => (
     </div>
     <div
       style={{
-        display: "inline-block",
+        display: "block",
         width: "100%",
         textAlign: "center",
         color: "black",
-        backgroundColor: "#A86068",
+        backgroundColor: "#FF9800",
         margin: 0,
       }}
     >
@@ -46,23 +46,35 @@ const FeaturesLegend = () => (
     </div>
     <div
       style={{
-        display: "inline-block",
+        display: "block",
         width: "100%",
         textAlign: "center",
         color: "black",
-        backgroundColor: "#A6545D",
+        backgroundColor: "#F57C00",
         margin: 0,
       }}
     >
-      <div style={{ color: "white" }}>40-80</div>
+      <div style={{ color: "white" }}>40-60</div>
     </div>
     <div
       style={{
-        display: "inline-block",
+        display: "block",
         width: "100%",
         textAlign: "center",
         color: "black",
-        backgroundColor: "#8F4850",
+        backgroundColor: "#E65100",
+        margin: 0,
+      }}
+    >
+      <div style={{ color: "white" }}>60-80</div>
+    </div>
+    <div
+      style={{
+        display: "block",
+        width: "100%",
+        textAlign: "center",
+        color: "black",
+        backgroundColor: "#BF360C",
         margin: 0,
       }}
     >
@@ -70,11 +82,11 @@ const FeaturesLegend = () => (
     </div>
     <div
       style={{
-        display: "inline-block",
+        display: "block",
         width: "100%",
         textAlign: "center",
         color: "black",
-        backgroundColor: "#912E39",
+        backgroundColor: "#982E0D",
         margin: 0,
       }}
     >
@@ -82,11 +94,11 @@ const FeaturesLegend = () => (
     </div>
     <div
       style={{
-        display: "inline-block",
+        display: "block",
         width: "100%",
         textAlign: "center",
         color: "black",
-        backgroundColor: "#91202C",
+        backgroundColor: "#5D200E",
         margin: 0,
       }}
     >
@@ -94,27 +106,15 @@ const FeaturesLegend = () => (
     </div>
     <div
       style={{
-        display: "inline-block",
+        display: "block",
         width: "100%",
         textAlign: "center",
         color: "black",
-        backgroundColor: "#8E0312",
+        backgroundColor: "#371207",
         margin: 0,
       }}
     >
-      <div style={{ color: "white" }}>200-250</div>
-    </div>
-    <div
-      style={{
-        display: "inline-block",
-        width: "100%",
-        textAlign: "center",
-        color: "black",
-        backgroundColor: "#3A0007",
-        margin: 0,
-      }}
-    >
-      <div style={{ color: "white" }}>250+</div>
+      <div style={{ color: "white" }}>200+</div>
     </div>
   </div>
 );

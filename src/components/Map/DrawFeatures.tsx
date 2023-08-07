@@ -3,27 +3,26 @@ import Axios from "axios";
 import DrawRegions from "./DrawRegions";
 import FeaturesLegend from "./FeaturesLegend";
 
-// const colors = ["#CDFACD", "#FAE61E", "#E67800", "#C80000", "#640000"];
 
 function getColor(value:number) {
     if (value < 10) {
-      return '#CBB5B8';
+      return '#FFE0B2';
     } else if (value < 20) {
-      return '#B29DA0';
+      return '#FFB74D';
     } else if (value < 40) {
-        return '#A86068';
+        return '#FF9800';
+    } else if (value < 60) {
+        return '#F57C00';
     } else if (value < 80) {
-        return '#A6545D';
+        return '#E65100';
     } else if (value < 100) {
-        return '#95414A';
+        return '#BF360C';
     } else if (value < 150) {
-        return '#912E39';
+        return '#982E0D';
     } else if (value < 200) {
-        return '#91202C';
-    } else if (value < 250) {
-        return '#8E0312';
+        return '#5D200E';
     }  else  {
-        return '#3A0007';
+        return '#371207';
 }
 }
 
