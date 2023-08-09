@@ -226,13 +226,8 @@ app.get("/api/get_predictions_bert", (req, res) => {
       res.status(500).send({ error: 'An error occurred' });
     });
 });
-app.get("/api/get_markers", (req,res)=>{
-  dfd.readCSV("./example.csv")
-  .then(df =>{
-    res.send(dfd.toJSON(df));
- });
-});
-app.get("/api/get_predictions_bert", (req, res) => {
+
+app.get("/api/get_predictions_zero", (req, res) => {
   dfd.readCSV("./filtered_dataset.csv")
     .then(df => {
       let month = Number(req.query.month)
@@ -244,7 +239,7 @@ app.get("/api/get_predictions_bert", (req, res) => {
       let combined_mask = country_mask.and(date_mask);
       
       df = df.loc({ rows: combined_mask }); 
-
+      
       let result = df.loc({ columns: ["admin_name", "fews_ipc"] })
       result = result.rename({ "fews_ipc": "ipc", "admin_name": "region" })
       console.log(result)
@@ -264,13 +259,23 @@ app.get("/api/get_predictions_bert", (req, res) => {
 
 
 app.get("/api/get_markers", (req,res)=>{
-  dfd.readCSV("./example.csv")
+  dfd.readCSV("./ssfd.csv")
   .then(df =>{
-    res.send(dfd.toJSON(df));
+      let minDate = Number(req.query.minDate)
+      let maxDate = Number(req.query.maxDate)
+      let country = req.query.country
+
+      let country_mask = df['country'].eq(country);
+      let date_mask = df['timestamp'].ge(minDate).and(df['timestamp'].le(maxDate))
+
+      let combined_mask = country_mask.and(date_mask);
+
+      df = df.loc({ rows: combined_mask });    
+
+      let result = df.loc({ columns: ["Predicted Labels", "longitude", "latitude", "Articles","Date"] });
+      result = result.rename({ "Predicted Labels": "name", "longitude": "long","latitude":"lat", "Articles": "art", "Date":"date" })
+      res.send(dfd.toJSON(result));
  });
 });
-
-
-
 
 app.listen(3001, () => console.log("running on port 3001"));

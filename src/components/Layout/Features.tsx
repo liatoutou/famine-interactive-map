@@ -62,7 +62,7 @@ const Anomalies = () => {
               <FeatureSelection setSelectedFeature={setSelectedFeature}/>
               <DateSelection setStartDate={setStartDate} setEndDate={setEndDate} />
               <Checkbox onChange={(e) => setDrawFeatures(e.target.checked)}>
-                Show Numbers
+                Show Events
               </Checkbox>
             </div>
             <Col span={24}>

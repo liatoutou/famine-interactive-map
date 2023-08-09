@@ -2,7 +2,7 @@ import React from "react";
 import Axios from "axios";
 import DrawRegions from "./DrawRegions";
 import FeaturesLegend from "./FeaturesLegend";
-
+import DrawMarkers from "./DrawMarkers";
 
 function getColor(value:number) {
     if (value < 10) {
@@ -82,6 +82,10 @@ function DrawFeatures({ setSelectedRegion, minDate, maxDate, countryselection,fe
             setSelectedRegion={setSelectedRegion}
         />
         <FeaturesLegend />
+        <DrawMarkers
+        countryselection={countryselection}
+        minDate={minDate}
+        maxDate={maxDate}/>
     </>
   );
 }
