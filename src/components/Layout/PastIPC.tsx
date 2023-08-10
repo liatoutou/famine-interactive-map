@@ -68,9 +68,7 @@ const DashBoard = () => {
                 setStartDate={setStartDate}
                 setEndDate={setEndDate}
               />
-              <Checkbox onChange={(e) => setDrawIPC(e.target.checked)}>
-                Show IPC
-              </Checkbox>
+              
             </div>
             <Col span={24}>
               <MapComponent

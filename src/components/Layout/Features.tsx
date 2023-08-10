@@ -35,7 +35,7 @@ const Anomalies = () => {
   const [selectedRegion, setSelectedRegion] = React.useState<string[]>([]);
   const [countryselection, setCountrySelection] = React.useState<string>("");
   const [featureselection, setSelectedFeature] = useState<string>("");
-  const [drawFeatures, setDrawFeatures] = React.useState(false);
+  const [drawFeatures, setDrawFeatures] = React.useState(true);
   const [modelselection, setSelectedModel] = useState<string>("");
   const [month, setMonth] = React.useState<Date | null>(null);
   const [drawPredictions, setDrawPredictions] = React.useState(false);
@@ -61,9 +61,7 @@ const Anomalies = () => {
               <CountrySelection setMapCenter={setMapCenter} setCountrySelection={setCountrySelection} />
               <FeatureSelection setSelectedFeature={setSelectedFeature}/>
               <DateSelection setStartDate={setStartDate} setEndDate={setEndDate} />
-              <Checkbox onChange={(e) => setDrawFeatures(e.target.checked)}>
-                Show Events
-              </Checkbox>
+              
             </div>
             <Col span={24}>
               <MapComponentFeatures

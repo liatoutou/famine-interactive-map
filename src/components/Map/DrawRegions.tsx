@@ -45,7 +45,7 @@ function DrawRegions({ data, setSelectedRegion }: Props) {
       {data.map((entry, index) => (
         <GeoJSON
           data={regionDict[entry.region] as any}
-          key={index}
+          key={entry.region}
           pathOptions={{
             fillColor: entry.color,
             color: "black",

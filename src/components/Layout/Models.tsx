@@ -38,7 +38,7 @@ const Models = () => {
   const [drawFeatures, setDrawFeatures] = React.useState(false);
   const [modelselection, setSelectedModel] = useState<string>("");
   const [month, setMonth] = React.useState<Date | null>(null);
-  const [drawPredictions, setDrawPredictions] = React.useState(false);
+  const [drawPredictions, setDrawPredictions] = React.useState(true);
 
 
   React.useEffect(() => {
@@ -61,9 +61,7 @@ const Models = () => {
               <CountrySelection setMapCenter={setMapCenter} setCountrySelection={setCountrySelection}/>
               <ModelSelection setSelectedModel={setSelectedModel}/>
               <MonthSelection setMonth={setMonth}/>
-              <Checkbox onChange={(e) => setDrawPredictions(e.target.checked)}>
-                Show IPC
-              </Checkbox>
+             
             </div>
             <Col span={24}>
               <MapComponentPreds
