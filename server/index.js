@@ -198,7 +198,7 @@ app.get("/api/get_acled_fatalities_sum", (req, res) => {
 
 //-------------Models-----------
 app.get("/api/get_predictions_bert", (req, res) => {
-  dfd.readCSV("./filtered_dataset.csv")
+  dfd.readCSV("./bertpred.csv")
     .then(df => {
       let month = Number(req.query.month)
       let country = req.query.country
@@ -208,11 +208,11 @@ app.get("/api/get_predictions_bert", (req, res) => {
 
       let combined_mask = country_mask.and(date_mask);
       
-      df = df.loc({ rows: combined_mask }); 
+      df = df.loc({ rows: combined_mask });     
 
 
-      let result = df.loc({ columns: ["admin_name", "fews_ipc"] })
-      result = result.rename({ "fews_ipc": "ipc", "admin_name": "region" })
+      let result = df.loc({ columns: ["admin_name", "fews_net"] })
+      result = result.rename({ "fews_net": "ipc", "admin_name": "region" })
       console.log(result)
 
       if (result.shape[0] > 0) { // Check if the result has any rows
@@ -228,7 +228,7 @@ app.get("/api/get_predictions_bert", (req, res) => {
 });
 
 app.get("/api/get_predictions_zero", (req, res) => {
-  dfd.readCSV("./filtered_dataset.csv")
+  dfd.readCSV("./zeropred.csv")
     .then(df => {
       let month = Number(req.query.month)
       let country = req.query.country
